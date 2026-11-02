@@ -4,7 +4,7 @@
 //   Left forearm flex  = bit 0
 //   Right forearm flex = bit 1
 //   Both at once       = commit the current letter
-//   7 bits             = one ASCII character
+//   5 bits             = one ASCII character
 // Sends text and status lines to the laptop over USB serial (115200 baud).
 // The laptop script (laptop/speak.py) speaks the text and plays the alarm.
 //
@@ -50,7 +50,7 @@ const unsigned long MIN_RR_MS = 300;         // ignore beats faster than 200 bpm
 // ---------------- state ----------------
 float envL = 0, envR = 0;
 float restL = 0, restR = 0;
-float thrL = 200, thrR = 200;   // replaced by calibration
+float thrL = 200, thrR = 200;   // Edit during calibration
 
 bool activeL = false, activeR = false;
 unsigned long startL = 0, startR = 0;
