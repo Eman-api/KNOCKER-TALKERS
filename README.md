@@ -51,12 +51,14 @@ Full drawing: [`hardware/emg_lang_proc_uno_wiring.pdf`](hardware/emg_lang_proc_u
    Close the Arduino Serial Monitor first, since only one program can use the port.
 3. **Calibrate.** On startup the Uno asks you to relax, then flex left, then flex right. Type `c` + Enter in `speak.py` to recalibrate anytime.
 
-Thresholds and timings are constants at the top of `firmware.ino` (`THRESH_FRACTION`, `MIN_HOLD_MS`, `R_THRESH`, ...). Tune them on real signals.
+Thresholds and timings are constants at the top of `emg.ino` and `ecg.ino` (`THRESH_FRACTION`, `MIN_HOLD_MS`, `R_THRESH`, ...). Tune them on real signals.
 
 ## Repo layout
 
 ```
-firmware/firmware.ino     Arduino code (folder name must match the .ino name)
+firmware/firmware.ino     setup() + loop() (folder name must match this file's name)
+firmware/emg.ino          EMG tab: calibration, wrist flex -> bits -> ASCII
+firmware/ecg.ino          ECG tab: heart rate, lead-off, alarm
 laptop/speak.py           serial -> text-to-speech + alarm
 hardware/                 KiCad schematic, wiring PDF, BOM
 docs/                     cheat sheet, slides, diagrams

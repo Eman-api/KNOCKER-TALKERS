@@ -36,6 +36,8 @@ Board and port settings live on your own computer, not in the repo, so they neve
 ### Opening the code (the step that matters most)
 **File → Open →** `Documents\GitHub\KNOCKER-TALKERS\firmware\firmware.ino`
 
+It opens with **3 tabs**: `firmware`, `ecg`, `emg`. Edit only the tab you own. All three are one program, so Verify/Upload always builds them together.
+
 - ✅ Always open it **from the repo folder**.
 - ❌ **Never "Save As"** somewhere else (like the default Arduino folder). That makes a copy that GitHub Desktop can't see, and your work never reaches the team.
 - ❌ Don't rename the `firmware` folder or `firmware.ino`. Arduino requires the folder and the file to have the same name.
@@ -88,7 +90,9 @@ Board and port settings live on your own computer, not in the repo, so they neve
 
 | Area | Folder | Owner |
 |---|---|---|
-| Arduino code | `firmware/` | _name_ |
+| Arduino setup/loop | `firmware/firmware.ino` | _name_ |
+| EMG (wrist flex -> letters) | `firmware/emg.ino` | _name_ |
+| ECG (heart rate + alarm) | `firmware/ecg.ino` | _name_ |
 | Laptop speech script | `laptop/` | _name_ |
 | Wiring / KiCad | `hardware/` | _name_ |
 | Slides, diagrams, report | `docs/` | _name_ |
