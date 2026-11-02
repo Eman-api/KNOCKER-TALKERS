@@ -1,6 +1,8 @@
 # KNOCKER-TALKERS
 KNOCK KNOCK TALK TALK
 
+> **New to GitHub? Read [START_HERE.md](START_HERE.md) first.** Three buttons, ten minutes.
+
 A wrist-flex communication aid. Two EMG sensors on the forearms turn deliberate wrist flexes into binary, the Arduino turns 7 bits into an ASCII letter, and the laptop speaks the finished sentence. An ECG channel watches heart rate and calls for help if it stays abnormal.
 
 | Input | Meaning |
