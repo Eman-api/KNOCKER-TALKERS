@@ -1,0 +1,7 @@
+Qty,Ref,Part,Notes
+1,A1,Arduino Uno R3,USB to laptop: power + serial text out
+2,M1 M2,MyoWare 2.0 Muscle Sensor,One per forearm on wrist flexors; ENV output; powered from 5V
+1,M3,AD8232 Heart Monitor module,3.3V ONLY; comes with 3.5mm 3-lead cable
+9,E1-E9,Ag/AgCl snap electrodes,Single-use; 3 per MyoWare + 3 for ECG per session
+~15,-,Jumper wires (M-M / M-F),Plus breadboard optional
+1,-,USB-A to USB-B cable,Uno to laptop

@@ -1,0 +1,27 @@
+name: Compile firmware
+
+on:
+  push:
+    paths: ["firmware/**", ".github/workflows/compile.yml"]
+  pull_request:
+    paths: ["firmware/**", ".github/workflows/compile.yml"]
+
+jobs:
+  arduino-uno:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: arduino/compile-sketches@v1
+        with:
+          fqbn: arduino:avr:uno
+          sketch-paths: |
+            - firmware
+
+  python-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m py_compile laptop/speak.py

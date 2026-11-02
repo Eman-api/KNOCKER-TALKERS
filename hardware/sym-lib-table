@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "EMG_Custom")(type "KiCad")(uri "${KIPRJMOD}/EMG_Custom.kicad_sym")(options "")(descr "Project symbols: AD8232"))
+)
