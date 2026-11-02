@@ -3,16 +3,19 @@ KNOCK KNOCK TALK TALK
 
 > **New to GitHub? Read [START_HERE.md](START_HERE.md) first.** Three buttons, ten minutes.
 
-A wrist-flex communication aid. Two EMG sensors on the forearms turn deliberate wrist flexes into binary, the Arduino turns 7 bits into an ASCII letter, and the laptop speaks the finished sentence. An ECG channel watches heart rate and calls for help if it stays abnormal.
+A wrist-flex communication aid. Two EMG sensors on the forearms turn deliberate wrist flexes into binary, the Arduino turns every 5 bits into a letter, and the laptop speaks the finished sentence. An ECG channel watches heart rate and calls for help if it stays abnormal.
 
 | Input | Meaning |
 |---|---|
 | Flex **left** wrist | bit `0` |
 | Flex **right** wrist | bit `1` |
-| Flex **both** together | commit the letter (7 bits) |
-| Letter `.` `?` or `!` | speak the sentence |
+| 5 flexes | one letter, sent automatically |
+| Flex **both** together | erase the bits typed so far |
+| `.` or `?` | speak the sentence |
+| `11111` | HELP (manual call for help) |
+| `00000` | cancel a false heart-rate alarm |
 
-Codes are in [`docs/ascii_cheatsheet.md`](docs/ascii_cheatsheet.md).
+All 32 codes are in [`docs/code_table.md`](docs/code_table.md). A letter's code is its position in the alphabet in binary (A = `00001`, Z = `11010`).
 
 ## Hardware
 
@@ -57,11 +60,11 @@ Thresholds and timings are constants at the top of `emg.ino` and `ecg.ino` (`THR
 
 ```
 firmware/firmware.ino     setup() + loop() (folder name must match this file's name)
-firmware/emg.ino          EMG tab: calibration, wrist flex -> bits -> ASCII
+firmware/emg.ino          EMG tab: calibration, wrist flex -> 5-bit letters
 firmware/ecg.ino          ECG tab: heart rate, lead-off, alarm
 laptop/speak.py           serial -> text-to-speech + alarm
 hardware/                 KiCad schematic, wiring PDF, BOM
-docs/                     cheat sheet, slides, diagrams
+docs/                     5-bit code table, slides, diagrams
 ```
 
 ## Working together

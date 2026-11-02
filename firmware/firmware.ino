@@ -3,8 +3,8 @@
 // Wrist-flex binary keyboard + heart-rate watchdog.
 //   Left forearm flex  = bit 0
 //   Right forearm flex = bit 1
-//   Both at once       = commit the current letter
-//   5 bits             = one ASCII character
+//   5 bits             = one letter (sent automatically, see docs/code_table.md)
+//   Both at once       = erase the bits typed so far
 // Sends text and status lines to the laptop over USB serial (115200 baud).
 // The laptop script (laptop/speak.py) speaks the text and plays the alarm.
 //
@@ -17,8 +17,11 @@
 //
 // Serial protocol (one line per message):
 //   BIT <0|1> <bits so far>   a bit was registered
-//   CHAR <c>                  a letter was committed
-//   CLEAR                     current bits were discarded (bad code)
+//   CHAR <c>                  a letter, space, '.' or '?' was typed
+//   DEL                       delete the last letter
+//   HELP                      user asked for help (manual alarm)
+//   CANCEL                    user cancelled a false alarm
+//   CLEAR                     bits typed so far were erased
 //   HR <bpm>                  heart rate, about once per second
 //   LEADOFF                   an ECG electrode is off (fault, not an emergency)
 //   ALARM                     sustained abnormal heart rate -> laptop calls for help
@@ -26,7 +29,7 @@
 
 // The sketch is split into tabs so two people can work at the same time:
 //   firmware.ino  - setup() and loop(): sampling timer + serial commands (rarely changes)
-//   emg.ino       - EMG: calibration, wrist flex -> bits -> ASCII letters   (EMG owner)
+//   emg.ino       - EMG: calibration, wrist flex -> bits -> 5-bit letters     (EMG owner)
 //   ecg.ino       - ECG: heart rate, lead-off, alarm                        (ECG owner)
 // Arduino IDE joins all .ino files in this folder into one program; each shows as a tab.
 

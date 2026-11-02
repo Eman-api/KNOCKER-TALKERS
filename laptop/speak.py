@@ -7,8 +7,11 @@ Run:     python laptop/speak.py            (auto-detects the Uno)
          python laptop/speak.py COM5       (Windows, explicit port)
          python laptop/speak.py /dev/ttyACM0
 
-Text rules:
-  CHAR <c>   adds a letter. A space character ends a word; '.' speaks the sentence.
+Text rules (5-bit code, see docs/code_table.md):
+  CHAR <c>   adds a letter or space; '.' or '?' speaks the sentence
+  DEL        deletes the last letter
+  HELP       user asked for help -> speak a call for help
+  CANCEL     user cancelled a false heart-rate alarm
 Keys while running:  c = recalibrate   q = quit   (type then press Enter)
 """
 import sys
@@ -55,6 +58,7 @@ def main():
     spk = Speaker()
     sentence = ""
     last_alarm = 0.0
+    alarm_muted_until = 0.0
     running = True
 
     def keyboard():
@@ -86,19 +90,29 @@ def main():
             print("\n(code discarded - start the letter again)")
         elif kind == "CHAR":
             ch = rest[:1] if rest else " "
-            if ch == "." or ch == "!" or ch == "?":
+            if ch in ".?!":
                 sentence += ch
                 spk.say(sentence.strip())
                 sentence = ""
             else:
                 sentence += ch
                 print(f"\ntext: {sentence}")
+        elif kind == "DEL":
+            sentence = sentence[:-1]
+            print(f"\ntext: {sentence}")
+        elif kind == "HELP":
+            print("\n!!! USER ASKED FOR HELP !!!")
+            spk.say("Help. I need help.")
+        elif kind == "CANCEL":
+            alarm_muted_until = time.time() + 60
+            print("\nalarm cancelled by user (muted for 60 s)")
+            spk.say("False alarm. I am okay.")
         elif kind == "HR":
             print(f"heart rate: {rest} bpm   ", end="\r")
         elif kind == "LEADOFF":
             print("ECG electrode off - check the leads   ", end="\r")
         elif kind == "ALARM":
-            if time.time() - last_alarm > 15:
+            if time.time() > alarm_muted_until and time.time() - last_alarm > 15:
                 last_alarm = time.time()
                 print("\n!!! HEART RATE ALARM !!!")
                 spk.say("Help. I need help. My heart rate is abnormal.")
